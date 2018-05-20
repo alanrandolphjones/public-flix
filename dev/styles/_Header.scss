@@ -1,0 +1,15 @@
+.nav {
+    display: flex;
+    justify-content: space-between;
+    &__ul {
+        display: flex;
+        align-items: center;
+        width: 50%;
+    }
+    &__li {
+        padding: 0 20px;
+        &:first-child {
+            padding-left: 0;
+        }
+    }
+}

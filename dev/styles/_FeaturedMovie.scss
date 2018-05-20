@@ -1,0 +1,19 @@
+.FeaturedMovie {
+    margin-top: 20px;
+    height: 500px;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    &__container {
+        width: 45%;
+    }
+    &__poster {
+        height: 80%;
+        margin-left: 10%;
+        box-shadow: 5px 5px 10px 10px rgba(0, 0, 0, 0.5);
+    }
+    &__button {
+        margin: 30px 0;
+        display: inline-block;
+    }
+}

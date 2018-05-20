@@ -38,11 +38,11 @@ class MainSection extends React.Component {
         this.loadCollectionPage = this.loadCollectionPage.bind(this)
     }
 
-    componentDidMount() {        
+    randomNumberGenerator(number) {
+        return Math.floor(Math.random() * number)
+    }
 
-        const randomNumberGenerator = (number) => {
-            return Math.floor(Math.random() * number)
-        }
+    componentDidMount() {        
 
         const collections = {}
 
@@ -92,7 +92,7 @@ class MainSection extends React.Component {
                     })
 
                     for (let i = 0; i < 5; i++) {
-                        fiveFilmArray.push(fullMovieArray[randomNumberGenerator(fullMovieArray.length)])
+                        fiveFilmArray.push(fullMovieArray[this.randomNumberGenerator(fullMovieArray.length)])
                     }
 
                     collections[collection.stateString] = {
@@ -171,26 +171,32 @@ class MainSection extends React.Component {
                 />
                 <FeaturedMovie
                     mainPageHidden={this.state.mainPageHidden}
+                    canon={this.props.canon}
+                    randomNumberGenerator={this.randomNumberGenerator}
+                    loadMovie={this.loadMovie}
+                    movieDBKey={this.props.movieDBKey}
                 />
 
                 {collectionsArray.map((collection, i) => {                    
                                         
                     return this.state.mainPageHidden ? null : (
-                        <section key={i}>
+                        <section key={i} className="collectionSection">
                             <h2>{this.props.collections[collection].title}</h2>
                             {/* How do we return this carousel for each key in this.state.collections */}
-                            {this.state.collections[collection].fiveFilmArray.map((movie, i) => {
-                                
-                                return (<Carousel
-                                    key={i}
-                                    title={movie.title}
-                                    identifier={movie.identifier}
-                                    shortDescription={movie.shortDescription}
-                                    description={movie.description}
-                                    loadMovie={this.loadMovie}
-                                    />
-                                )
-                            })}
+                            <div className="collectionSection__container">
+                                {this.state.collections[collection].fiveFilmArray.map((movie, i) => {
+                                    
+                                    return (<Carousel
+                                        key={i}
+                                        title={movie.title}
+                                        identifier={movie.identifier}
+                                        shortDescription={movie.shortDescription}
+                                        description={movie.description}
+                                        loadMovie={this.loadMovie}
+                                        />
+                                    )
+                                })}
+                            </div>
                             <a href="#" onClick={() => this.loadCollectionPage(this.props.collections[collection].stateString)}>See More</a>
                         </section>
                     )
