@@ -1,15 +1,40 @@
 .nav {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    position: relative;
     &__ul {
         display: flex;
         align-items: center;
         width: 50%;
+        justify-content: space-between;
+        @media (max-width: 940px) {
+            display: none;
+            width: auto;
+            position: absolute;
+            z-index: 10;
+            flex-flow: column wrap;
+            right: 0;
+            top: 85%;
+            align-items: flex-end;
+            padding: 10px;
+            background: rgba(#141414, 0.9);
+            &:hover {
+                display: block;
+            }
+        }
     }
     &__li {
-        padding: 0 20px;
-        &:first-child {
-            padding-left: 0;
+        margin: 10px;
+    }
+    &__hamburger {
+        font-size: 40px;
+        display: none;
+        &:hover + ul {
+            display: block;
+        }
+        @media (max-width: 940px) {
+            display: block;
         }
     }
 }

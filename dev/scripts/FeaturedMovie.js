@@ -31,7 +31,6 @@ class FeaturedMovie extends React.Component {
                         language: 'en-US'
                         }
                     }).then((res) => {
-                        console.log(res);
                         
                         const featuredMovie = {
                             title: res.data.title,
@@ -46,13 +45,8 @@ class FeaturedMovie extends React.Component {
 
                         featuredMovie.description = featuredMovie.description.replace(/negro/g, "Black")
 
-                        //Putting a bg image on this is now a stretch goal.
 
-                        document.body.style.backgroundImage = `url('https://image.tmdb.org/t/p/original/${res.data.backdrop_path}')`
-                        
-                        // center center / cover no-repeat, linear-gradient('to right, #141414 0%, #141414 50%, rgba(#fff, 0.5) 100%' no-repeat`
-                        
-
+                        document.body.style.backgroundImage = `url('https://image.tmdb.org/t/p/original/${res.data.backdrop_path}')`                        
 
                         this.setState({
                             featuredMovie: featuredMovie
@@ -65,8 +59,6 @@ class FeaturedMovie extends React.Component {
         
     }
 
-
-    // style = { this.state.featuredMovie.background }
     render() {        
         return this.props.mainPageHidden ? null : (
             <section className="FeaturedMovie">

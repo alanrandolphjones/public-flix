@@ -16,4 +16,14 @@
         margin: 30px 0;
         display: inline-block;
     }
+    @media (max-width: 940px) {
+        height: auto;
+        &__poster {
+            display: none;
+        }
+        &__container {
+            width: 100%;
+            max-width: 400px;
+        }
+    }
 }

@@ -35,6 +35,11 @@ const collections = {
 
 const canon = [
   {
+    title: "The 39 Steps",
+    identifier: 'The39StepsImageQualityUpgrade',
+    id: 260
+  },
+  {
     title: 'Night of the Living Dead',
     identifier: 'Night_Of_The_Living_Dead_raw_HD_WS',
     id: 10331
@@ -137,19 +142,183 @@ const canon = [
 ]
 
 class App extends React.Component {
+  constructor () {
+    super()
+
+    this.state = {
+      collections: {
+        sciFiHorror: {
+          fiveFilmArray: [],
+          fullMovieArray: []
+        },
+        filmNoir: {
+          fiveFilmArray: [],
+          fullMovieArray: []
+        },
+        comedy: {
+          fiveFilmArray: [],
+          fullMovieArray: []
+        },
+      },
+      mainPageHidden: false,
+      moviePageHidden: true,
+      collectionPageHidden: true,
+      selectedMovie: [],
+      currentCollection: '',
+      // loadNumber: 20
+    }
+
+    this.componentDidMount = this.componentDidMount.bind(this);
+    this.loadMovie = this.loadMovie.bind(this);
+    this.goHome = this.goHome.bind(this);
+    this.loadCollectionPage = this.loadCollectionPage.bind(this);
+  }
+
+  randomNumberGenerator(number) {
+    return Math.floor(Math.random() * number)
+  }
+
+  loadMovie(theseProps) {
+
+    this.setState({
+      mainPageHidden: true,
+      moviePageHidden: false,
+      collectionPageHidden: true,
+      selectedMovie: theseProps,
+    })
+  }
+
+  goHome() {
+    this.setState({
+      mainPageHidden: false,
+      moviePageHidden: true,
+      collectionPageHidden: true,
+    })
+  }
+
+  loadCollectionPage(collection) {
+
+    //In here, figure out how to load 20 entries from each collection, with an option to view more at the bottom.        
+    this.setState({
+      mainPageHidden: true,
+      collectionPageHidden: false,
+      moviePageHidden: true,
+      currentCollection: collection
+    })
+
+  }
+
+  componentDidMount() {
+
+    const collections = {}
+
+    const getMovies = (collection) => {
+
+      axios.get('https://cryptic-headland-94862.herokuapp.com/https://archive.org/advancedsearch.php',
+        {
+          params: {
+            q: `collection:${collection.name}`,
+            output: 'json',
+            rows: collection.number
+          }
+        })
+        .then((data) => {          
+
+          const ZIPAndMovieArray = data.data.response.docs;
+
+          const fullMovieArray = ZIPAndMovieArray.filter((film) => {
+            return film.mediatype === "movies"
+          })
+
+          const fiveFilmArray = [];
+
+          fullMovieArray.forEach((movie) => {
+
+            if (!movie.description) {
+              movie.description = "There is no description for this film."
+            }
+            else if (Array.isArray(movie.description) === true && movie.description[0].split(" ").length > 15) {
+              movie.shortDescription = movie.description[0].split(" ").splice(0, 15).join(" ") + '...'
+              movie.description = movie.description[0]
+            }
+            else if (Array.isArray(movie.description) === true && movie.description[0].split(" ").length < 15) {
+              movie.shortDescription = movie.description[0]
+              movie.description = movie.description[0]
+            }
+            else if (Array.isArray(movie.description) === false && movie.description.split(" ").length > 15) {
+              movie.shortDescription = movie.description.split(" ").splice(0, 15).join(" ") + '...'
+            }
+            else {
+              movie.shortDescription = movie.description;
+            }
+            if (Array.isArray(movie.title) === true) {
+              movie.title = movie.title[0]
+            }
+
+            movie.title = movie.title.replace(/\./g," ")
+
+            movie.title = movie.title.replace(/-hd/i, " ")
+
+            movie.title = movie.title.replace(/\(ipod\)/i, " ")
+
+            movie.title = movie.title.replace(/ipod/i, " ")
+
+            movie.title = movie.title.replace(/hd/i, " ")
+
+
+
+          })
+
+          for (let i = 0; i < 5; i++) {
+            fiveFilmArray.push(fullMovieArray[this.randomNumberGenerator(fullMovieArray.length)])
+          }
+
+          collections[collection.stateString] = {
+            fiveFilmArray: fiveFilmArray,
+            fullMovieArray: fullMovieArray
+          }
+
+          this.setState({
+            collections: collections
+          })
+
+        })
+
+    }
+
+    for (const collection in this.props.collections) {
+      getMovies(this.props.collections[collection])
+    }
+
+  }
 
   render() {    
     return (
       <div className="bg-gradient">
       <div className="wrapper">
-      <Header />
+      <Header 
+        collections={this.props.collections}
+        loadCollectionPage={this.loadCollectionPage}
+        goHome={this.goHome}
+      />
 
         <MainSection
+          stateCollections={this.state.collections}
           collections={this.props.collections}
           canon={this.props.canon}
           movieDBKey={this.props.movieDBKey}
+          loadCollectionPage={this.loadCollectionPage}
+          moviePageHidden={this.state.moviePageHidden}
+          selectedMovie={this.state.selectedMovie}
+          collectionPageHidden={this.state.collectionPageHidden}
+          currentCollection={this.state.currentCollection}
+          // loadNumber={this.loadNumber}
+          mainPageHidden={this.state.mainPageHidden}
+          randomNumberGenerator={this.randomNumberGenerator}
+          loadMovie={this.loadMovie}
+          goHome={this.goHome}
+          loadMore={this.loadMore}
         />
-
       </div>
       </div>
     )
