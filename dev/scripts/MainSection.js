@@ -47,7 +47,7 @@ class MainSection extends React.Component {
                             <h2 className="header-2 header-2--sectionHeader">{this.props.collections[collection].title}</h2>
                             <ul className="collectionSection__container">
                                 
-                                {this.props.stateCollections[collection].fiveFilmArray.map((movie, i) => {
+                                {this.props.stateCollections[collection].fourFilmArray.map((movie, i) => {
                                     
                                     return (<Carousel
                                         key={i}
@@ -59,8 +59,8 @@ class MainSection extends React.Component {
                                         />
                                     )
                                 })}
+                                <li><a className="button collectionSection__seeMore" href="#" onClick={() => this.props.loadCollectionPage(this.props.collections[collection].stateString)}>See More...</a></li>
                             </ul>
-                            <a className="button collectionSection__seeMore" href="#" onClick={() => this.props.loadCollectionPage(this.props.collections[collection].stateString)}>See More...</a>
                         </section>
                     )
                 })}

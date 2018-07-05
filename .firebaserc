@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "staging": "public-flix",
+    "default": "public-flix"
+  }
+}

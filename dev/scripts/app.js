@@ -1,6 +1,8 @@
-// API endpoint: https://archive.org/advancedsearch.php?q=collection:feature_films&rows=&page=7&output=json
+//Add search function
 
-// MovieDB key: bd5ee0c206e79e2dc0186972054894df
+//Add Firebase/Login Function
+
+//Fix hover state bugs / Fix responsiveness
 
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -148,15 +150,15 @@ class App extends React.Component {
     this.state = {
       collections: {
         sciFiHorror: {
-          fiveFilmArray: [],
+          fourFilmArray: [],
           fullMovieArray: []
         },
         filmNoir: {
-          fiveFilmArray: [],
+          fourFilmArray: [],
           fullMovieArray: []
         },
         comedy: {
-          fiveFilmArray: [],
+          fourFilmArray: [],
           fullMovieArray: []
         },
       },
@@ -230,7 +232,7 @@ class App extends React.Component {
             return film.mediatype === "movies"
           })
 
-          const fiveFilmArray = [];
+          const fourFilmArray = [];
 
           fullMovieArray.forEach((movie) => {
 
@@ -269,12 +271,12 @@ class App extends React.Component {
 
           })
 
-          for (let i = 0; i < 5; i++) {
-            fiveFilmArray.push(fullMovieArray[this.randomNumberGenerator(fullMovieArray.length)])
+          for (let i = 0; i < 4; i++) {
+            fourFilmArray.push(fullMovieArray[this.randomNumberGenerator(fullMovieArray.length)])
           }
 
           collections[collection.stateString] = {
-            fiveFilmArray: fiveFilmArray,
+            fourFilmArray: fourFilmArray,
             fullMovieArray: fullMovieArray
           }
 
@@ -312,7 +314,6 @@ class App extends React.Component {
           selectedMovie={this.state.selectedMovie}
           collectionPageHidden={this.state.collectionPageHidden}
           currentCollection={this.state.currentCollection}
-          // loadNumber={this.loadNumber}
           mainPageHidden={this.state.mainPageHidden}
           randomNumberGenerator={this.randomNumberGenerator}
           loadMovie={this.loadMovie}
