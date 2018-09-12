@@ -7,8 +7,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
-import FeaturedMovie from './FeaturedMovie';
-import Carousel from './Carousel';
 import MainSection from './MainSection';
 import Header from './Header'
 
@@ -167,7 +165,6 @@ class App extends React.Component {
       collectionPageHidden: true,
       selectedMovie: [],
       currentCollection: '',
-      // loadNumber: 20
     }
 
     this.componentDidMount = this.componentDidMount.bind(this);
@@ -194,7 +191,7 @@ class App extends React.Component {
     this.setState({
       mainPageHidden: false,
       moviePageHidden: true,
-      collectionPageHidden: true,
+      collectionPageHidden: true
     })
   }
 
@@ -214,9 +211,9 @@ class App extends React.Component {
 
     const collections = {}
 
-    const getMovies = (collection) => {
+    const getMovies = (collection) => {      
 
-      axios.get('https://cryptic-headland-94862.herokuapp.com/https://archive.org/advancedsearch.php',
+      axios.get('https://cors-anywhere.herokuapp.com/https://archive.org/advancedsearch.php',
         {
           params: {
             q: `collection:${collection.name}`,
@@ -224,7 +221,7 @@ class App extends React.Component {
             rows: collection.number
           }
         })
-        .then((data) => {          
+        .then((data) => {   
 
           const ZIPAndMovieArray = data.data.response.docs;
 
@@ -302,6 +299,7 @@ class App extends React.Component {
         collections={this.props.collections}
         loadCollectionPage={this.loadCollectionPage}
         goHome={this.goHome}
+        filmArrays={this.state.collections}
       />
 
         <MainSection
