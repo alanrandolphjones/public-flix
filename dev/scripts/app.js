@@ -213,7 +213,7 @@ class App extends React.Component {
 
     const getMovies = (collection) => {      
 
-      axios.get('https://cors-anywhere.herokuapp.com/https://archive.org/advancedsearch.php',
+      axios.get('https://boiling-shelf-16073.herokuapp.com/https://archive.org/advancedsearch.php',
         {
           params: {
             q: `collection:${collection.name}`,
