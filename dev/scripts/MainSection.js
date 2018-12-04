@@ -15,6 +15,10 @@ class MainSection extends React.Component {
             collectionsArray.push(collection)
         }
 
+        if (!this.props.moviesLoaded) return (
+            <h3 class="header-3">Loading with all the power of a massive, not-for-profit, public online archive! <i className="fa fa-spinner fa-spin"></i></h3>
+        )
+
         return (
             
             <main>
@@ -32,6 +36,7 @@ class MainSection extends React.Component {
                     loadMore={this.props.loadMore}
                     // loadNumber={this.props.loadNumber}
                 />
+
                 <FeaturedMovie
                     mainPageHidden={this.props.mainPageHidden}
                     canon={this.props.canon}
@@ -64,6 +69,7 @@ class MainSection extends React.Component {
                         </section>
                     )
                 })}
+            
             </main>
         )
     }

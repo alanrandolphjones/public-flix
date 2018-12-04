@@ -146,6 +146,7 @@ class App extends React.Component {
     super()
 
     this.state = {
+      moviesLoaded: false,
       collections: {
         sciFiHorror: {
           fourFilmArray: [],
@@ -264,8 +265,6 @@ class App extends React.Component {
 
             movie.title = movie.title.replace(/hd/i, " ")
 
-
-
           })
 
           for (let i = 0; i < 4; i++) {
@@ -278,7 +277,8 @@ class App extends React.Component {
           }
 
           this.setState({
-            collections: collections
+            collections: collections,
+            moviesLoaded: true
           })
 
         })
@@ -317,6 +317,7 @@ class App extends React.Component {
           loadMovie={this.loadMovie}
           goHome={this.goHome}
           loadMore={this.loadMore}
+          moviesLoaded={this.state.moviesLoaded}
         />
       </div>
       </div>
