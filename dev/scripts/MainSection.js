@@ -16,7 +16,7 @@ class MainSection extends React.Component {
         }
 
         if (!this.props.moviesLoaded) return (
-            <h3 class="header-3">Loading with all the power of a massive, not-for-profit, public online archive! <i className="fa fa-spinner fa-spin"></i></h3>
+            <h3 className="header-3">Loading... <i className="fa fa-spinner fa-spin"></i></h3>
         )
 
         return (

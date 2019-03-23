@@ -94,18 +94,6 @@ class Header extends React.Component {
                             )
                         })}
                     </ul>
-                    {/* <Search 
-                        data={this.state.allFilms}
-                        onChange={this.handleChange()}
-                        placeholder="Search for a string..."
-                        class="search-class"
-                        searchKey="lowerCaseTitle"
-                    /> */}
-                    {/* <form action="">
-                        <label> Search
-                        <input type="text" value={this.state.value} onChange={this.handleChange}/>
-                        </label>
-                    </form> */}
                 </nav>
             </header>
         )
